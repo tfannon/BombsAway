@@ -8,28 +8,28 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, IGameClient {
 
-    var root = Firebase(url: "https://shining-torch-5343.firebaseio.com/BombsAway/")
+    var gameMaster = GameMaster.sharedInstance
 
+    @IBOutlet weak var name: UITextField!
     @IBOutlet weak var myImage: UIImageView!
+    @IBOutlet weak var events: UITextView!
+    
+    @IBAction func addPlayer(sender: AnyObject) {
+        gameMaster.addPlayer(name.text)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        gameMaster.registerClient("Test", client: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        FirebaseHelper.addPlayer("Tommy") { (result) in
-            println("Player added: ]\(result)")
-        }
-        root.observeSingleEventOfType(.Value, withBlock: { snapshot in
-            println(snapshot.value)
-        })
+        events.text = ""
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         let aTouch = event.allTouches()!.first as! UITouch
         let touchLocation = aTouch.locationInView(aTouch.view)
@@ -42,6 +42,24 @@ class ViewController: UIViewController {
         if aTouch.view.isEqual(self.view) {
             self.myImage.center = touchLocation
         }
+    }
+    
+    //MARK:  IGameClient
+    func onBombAppeared(bomb : FBBomb) {
+        
+    }
+    
+    func onPlayerAppeared(player : FBPlayer) {
+        events.text = events.text + "\(player) joined"
+    }
+
+    func onPlayerDisappeared(player : FBPlayer) {
+        events.text = events.text + "\(player) left"
+    }
+
+    //actions
+    func setBombState(state : BombState) {
+        
     }
 }
 

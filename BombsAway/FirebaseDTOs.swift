@@ -7,12 +7,23 @@
 //
 
 
-class FBPlayer {
-    var userId : String
-    var userName : String
-
-    init (userId : String, userName : String) {
-        self.userId = userId
-        self.userName = userName
+class FBPlayer : Printable {
+    var id : String
+    var name : String
+    
+    init(snapshot : FDataSnapshot) {
+        self.id = snapshot.value["id"] as! String
+        self.name = snapshot.value["name"] as! String
     }
+    
+    var description : String {
+        return "\(self.id):\(self.name)"
+    }
+}
+
+
+class FBBomb {
+    var color : String?
+    var ttl : Int?
+    var sender : String?
 }
