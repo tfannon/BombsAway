@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     var root = Firebase(url: "https://shining-torch-5343.firebaseio.com/BombsAway/")
 
+    @IBOutlet weak var myImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,19 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let aTouch = event.allTouches()!.first as! UITouch
+        let touchLocation = aTouch.locationInView(aTouch.view)
+        self.myImage.center = touchLocation
+    }
+    
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let aTouch = event.allTouches()!.first as! UITouch
+        let touchLocation = aTouch.locationInView(aTouch.view)
+        if aTouch.view.isEqual(self.view) {
+            self.myImage.center = touchLocation
+        }
+    }
 }
 

@@ -21,6 +21,7 @@
 		65340B8A1AE150100080C402 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65340B891AE150100080C402 /* Images.xcassets */; };
 		65340B8D1AE150100080C402 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65340B8B1AE150100080C402 /* LaunchScreen.xib */; };
 		65340B991AE150100080C402 /* BombsAwayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65340B981AE150100080C402 /* BombsAwayTests.swift */; };
+		6575A9F31AE170AF0055FEA5 /* gear-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 6575A9F21AE170AF0055FEA5 /* gear-512x512.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		65340B921AE150100080C402 /* BombsAwayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BombsAwayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65340B971AE150100080C402 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65340B981AE150100080C402 /* BombsAwayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombsAwayTests.swift; sourceTree = "<group>"; };
+		6575A9F21AE170AF0055FEA5 /* gear-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear-512x512.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		65340B7F1AE150100080C402 /* BombsAway */ = {
 			isa = PBXGroup;
 			children = (
+				6575A9F21AE170AF0055FEA5 /* gear-512x512.png */,
 				651A5B9F1AE1595A009624AB /* BombsAway-Bridging-Header.h */,
 				65340B821AE150100080C402 /* AppDelegate.swift */,
 				651A5BA31AE15C13009624AB /* FirebaseHelper.swift */,
@@ -235,6 +238,7 @@
 				65340B881AE150100080C402 /* Main.storyboard in Resources */,
 				65340B8D1AE150100080C402 /* LaunchScreen.xib in Resources */,
 				65340B8A1AE150100080C402 /* Images.xcassets in Resources */,
+				6575A9F31AE170AF0055FEA5 /* gear-512x512.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
