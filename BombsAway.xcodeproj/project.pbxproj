@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		651A5B941AE158CA009624AB /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A5B931AE158CA009624AB /* Firebase.framework */; };
+		651A5B961AE158F8009624AB /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A5B951AE158F8009624AB /* libicucore.dylib */; };
+		651A5B981AE15902009624AB /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A5B971AE15902009624AB /* libc++.dylib */; };
+		651A5B9A1AE15906009624AB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A5B991AE15906009624AB /* CFNetwork.framework */; };
+		651A5B9C1AE15912009624AB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A5B9B1AE15912009624AB /* Security.framework */; };
+		651A5B9E1AE1591E009624AB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 651A5B9D1AE1591E009624AB /* SystemConfiguration.framework */; };
+		651A5BA41AE15C13009624AB /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A5BA31AE15C13009624AB /* FirebaseHelper.swift */; };
+		651A5BA61AE15CA8009624AB /* FirebaseDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A5BA51AE15CA8009624AB /* FirebaseDTOs.swift */; };
 		65340B831AE150100080C402 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65340B821AE150100080C402 /* AppDelegate.swift */; };
 		65340B851AE150100080C402 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65340B841AE150100080C402 /* ViewController.swift */; };
 		65340B881AE150100080C402 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65340B861AE150100080C402 /* Main.storyboard */; };
@@ -26,6 +34,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		651A5B931AE158CA009624AB /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Firebase.framework; path = BombsAway/Firebase.framework; sourceTree = "<group>"; };
+		651A5B951AE158F8009624AB /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		651A5B971AE15902009624AB /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		651A5B991AE15906009624AB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		651A5B9B1AE15912009624AB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		651A5B9D1AE1591E009624AB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		651A5B9F1AE1595A009624AB /* BombsAway-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BombsAway-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		651A5BA31AE15C13009624AB /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		651A5BA51AE15CA8009624AB /* FirebaseDTOs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseDTOs.swift; sourceTree = "<group>"; };
 		65340B7D1AE150100080C402 /* BombsAway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BombsAway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65340B811AE150100080C402 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65340B821AE150100080C402 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +60,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				651A5B9E1AE1591E009624AB /* SystemConfiguration.framework in Frameworks */,
+				651A5B9C1AE15912009624AB /* Security.framework in Frameworks */,
+				651A5B9A1AE15906009624AB /* CFNetwork.framework in Frameworks */,
+				651A5B941AE158CA009624AB /* Firebase.framework in Frameworks */,
+				651A5B981AE15902009624AB /* libc++.dylib in Frameworks */,
+				651A5B961AE158F8009624AB /* libicucore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,9 +79,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		651A5BA21AE1596F009624AB /* Framworks */ = {
+			isa = PBXGroup;
+			children = (
+				651A5B971AE15902009624AB /* libc++.dylib */,
+				651A5B951AE158F8009624AB /* libicucore.dylib */,
+				651A5B991AE15906009624AB /* CFNetwork.framework */,
+				651A5B9B1AE15912009624AB /* Security.framework */,
+				651A5B9D1AE1591E009624AB /* SystemConfiguration.framework */,
+				651A5B931AE158CA009624AB /* Firebase.framework */,
+			);
+			name = Framworks;
+			sourceTree = "<group>";
+		};
 		65340B741AE150100080C402 = {
 			isa = PBXGroup;
 			children = (
+				651A5BA21AE1596F009624AB /* Framworks */,
 				65340B7F1AE150100080C402 /* BombsAway */,
 				65340B951AE150100080C402 /* BombsAwayTests */,
 				65340B7E1AE150100080C402 /* Products */,
@@ -77,7 +114,10 @@
 		65340B7F1AE150100080C402 /* BombsAway */ = {
 			isa = PBXGroup;
 			children = (
+				651A5B9F1AE1595A009624AB /* BombsAway-Bridging-Header.h */,
 				65340B821AE150100080C402 /* AppDelegate.swift */,
+				651A5BA31AE15C13009624AB /* FirebaseHelper.swift */,
+				651A5BA51AE15CA8009624AB /* FirebaseDTOs.swift */,
 				65340B841AE150100080C402 /* ViewController.swift */,
 				65340B861AE150100080C402 /* Main.storyboard */,
 				65340B891AE150100080C402 /* Images.xcassets */,
@@ -212,7 +252,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				651A5BA61AE15CA8009624AB /* FirebaseDTOs.swift in Sources */,
 				65340B851AE150100080C402 /* ViewController.swift in Sources */,
+				651A5BA41AE15C13009624AB /* FirebaseHelper.swift in Sources */,
 				65340B831AE150100080C402 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,9 +382,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BombsAway",
+				);
 				INFOPLIST_FILE = BombsAway/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BombsAway-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -350,9 +400,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BombsAway",
+				);
 				INFOPLIST_FILE = BombsAway/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BombsAway-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -409,6 +466,7 @@
 				65340B9E1AE150100080C402 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65340B9F1AE150100080C402 /* Build configuration list for PBXNativeTarget "BombsAwayTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +475,7 @@
 				65340BA11AE150100080C402 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
