@@ -23,7 +23,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     var gameMasterClientKey : String!
     var players = [String: FBPlayer]()
     
-    let SINGLE_PLAYER_MODE = true
+    let SINGLE_PLAYER_MODE = false
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -113,21 +113,29 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     }
     func onPlayerAppeared(player: FBPlayer) {
         players[player.id] = player
-        var s = ""
-        for x in players
-        {
-            s += "\(x.1.name): \(x.1) "
-        }
-        lblScore.text = s;
+        updateScore()
     }
     func onPlayerDisappeared(player: FBPlayer) {
-        
+        players.removeValueForKey(player.id)
+        updateScore()
     }
     func onPlayerChanged(player : FBPlayer) {
+        players[player.id] = player
+        updateScore()
     }
 
     func onLastPlayerDisappeared() {
         bomb?.diffuse()
+    }
+    
+    private func updateScore()
+    {
+        var s = ""
+        for x in players
+        {
+            s += "\(x.1.name): \(x.1.score) "
+        }
+        lblScore.text = s;
     }
     
     // MARK: Standard iOS Stuff
