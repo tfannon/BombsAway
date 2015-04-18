@@ -21,6 +21,7 @@ class Bomb
     let imgBomb : UIImageView!
     let imgExplosion : UIImageView!
     let listener : IBombListener!
+    let ttl : NSTimeInterval
  
     let fusePlayer = AudioPlayer(filename: "fuse")
     let boomPlayer = AudioPlayer(filename: "boom")
@@ -28,6 +29,7 @@ class Bomb
     
     var bombStartingPosition : CGPoint!
     var calculating = false;
+    var missedAttempts = 0;
     
     func incoming()
     {
@@ -50,7 +52,7 @@ class Bomb
         }
         imgBomb.center = bombStartingPosition
         
-        UIView.animateWithDuration(1,
+        UIView.animateWithDuration(ttl,
             animations: { () -> Void in
                 // do actual move
                 self.fusePlayer.play()
@@ -60,17 +62,7 @@ class Bomb
                 if (complete)
                 {
                     //when animation completes
-                    self.imgBomb.hidden = true
-                    self.imgExplosion.center = self.imgBomb.center
-                    self.imgExplosion.hidden = false
-                    self.imgExplosion.alpha = 0
-                    self.fusePlayer.stop()
-                    self.boomPlayer.play()
-                    self.imgExplosion.fadeIn(duration: 0.2, completion: { (completed) -> Void in
-                        self.imgExplosion.fadeOut(duration: 0.5, completion: { (completed) -> Void in
-                            self.listener.onExploded(self)
-                        })
-                    })
+                    self.explode()
                 }
             }
         )
@@ -82,28 +74,36 @@ class Bomb
         {
             calculating = true;
             let hit = imgBomb.layer.presentationLayer().hitTest(point) != nil
-            if (hit)
+            missedAttempts++;
+            if (hit || missedAttempts >= 2)
             {
                 let layer = imgBomb.layer.presentationLayer() as! CALayer
                 let frame = layer.frame
                 imgBomb.layer.removeAllAnimations()
                 imgBomb.frame = frame
                 
-                UIView.animateWithDuration(0.3,
-                    animations: { () -> Void in
-                        // do actual move
-                        self.pingPlayer.play()
-                        self.imgBomb.center = self.bombStartingPosition
-                    },
-                    completion: { (complete) -> Void in
-                        if (complete)
-                        {
-                            //when animation completes
-                            self.pingPlayer.stop()
-                            self.listener.onDiffusedAndSent(self)
-                            self.calculating = false
-                        }
-                })
+                if (hit)
+                {
+                    UIView.animateWithDuration(0.3,
+                        animations: { () -> Void in
+                            // do actual move
+                            self.pingPlayer.play()
+                            self.imgBomb.center = self.bombStartingPosition
+                        },
+                        completion: { (complete) -> Void in
+                            if (complete)
+                            {
+                                //when animation completes
+                                self.pingPlayer.stop()
+                                self.listener.onDiffusedAndSent(self)
+                                self.calculating = false
+                            }
+                    })
+                }
+                else
+                {
+                    explode()
+                }
             }
             else
             {
@@ -112,9 +112,30 @@ class Bomb
         }
     }
     
-    init(listener : IBombListener, uiView : UIView, imgBomb : UIImageView, imgExplosion : UIImageView)
+    private func explode()
+    {
+        self.imgBomb.hidden = true
+        self.imgExplosion.center = self.imgBomb.center
+        self.imgExplosion.hidden = false
+        self.imgExplosion.alpha = 0
+        self.fusePlayer.stop()
+        self.boomPlayer.play()
+        self.imgExplosion.fadeIn(duration: 0.2, completion: { (completed) -> Void in
+            self.imgExplosion.fadeOut(duration: 0.5, completion: { (completed) -> Void in
+                self.listener.onExploded(self)
+            })
+        })
+    }
+    
+    init(
+        listener : IBombListener,
+        ttl : NSTimeInterval,
+        uiView : UIView,
+        imgBomb : UIImageView,
+        imgExplosion : UIImageView)
     {
         self.listener = listener
+        self.ttl = ttl
         self.uiView = uiView
         self.imgBomb = imgBomb
         self.imgExplosion = imgExplosion

@@ -18,11 +18,15 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     
     var i = 0
     var bomb : Bomb?
-    var gameMaster = GameMaster.sharedInstance
+    let gameMaster = GameMaster.sharedInstance
+    var gameMasterClientKey : String!
+    
+    let SINGLE_PLAYER_MODE = true
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        gameMaster.registerClient(self.nameOfClass, client: self)
+        gameMasterClientKey = self.nameOfClass
+        gameMaster.registerClient(gameMasterClientKey, client: self)
     }
     
     // MARK: text field
@@ -35,19 +39,40 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     // MARK: bomb events
     func onDiffusedAndSent(bomb: Bomb) {
         self.bomb = nil
-        newIncomingBomb()
+        if SINGLE_PLAYER_MODE
+        {
+            newIncomingBomb()
+        }
+        else
+        {
+            gameMaster.defuse(gameMasterClientKey);
+        }
     }
     
     func onExploded(bomb: Bomb) {
         self.bomb = nil
-        newIncomingBomb()
+        if (SINGLE_PLAYER_MODE)
+        {
+            newIncomingBomb()
+        }
+        else
+        {
+            gameMaster.detonate(gameMasterClientKey)
+        }
     }
     
     func newIncomingBomb()
     {
         if (bomb == nil)
         {
-            bomb = Bomb(listener: self, uiView: self.view, imgBomb: imgBomb, imgExplosion: imgExplosion)
+            // random time interval between .5 - 1 second
+            let ttl = Double(Misc.GetRandom(5, endingInclusive: 10)) / 10.0
+            bomb = Bomb(
+                listener: self,
+                ttl: 3,
+                uiView: self.view,
+                imgBomb: imgBomb,
+                imgExplosion: imgExplosion)
             bomb!.incoming()
         }
     }
@@ -63,9 +88,16 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     // MARK: GameMaster
     @IBAction func buttonUp(sender: AnyObject) {
         UserSettings.sharedInstance.setUserName(txtName.text)
-        gameMaster.addPlayer(self.nameOfClass, name: txtName.text)
         button.hidden = true
         txtName.hidden = true
+        if SINGLE_PLAYER_MODE
+        {
+            newIncomingBomb()
+        }
+        else
+        {
+            gameMaster.addPlayer(gameMasterClientKey, name: txtName.text)
+        }
     }
     
     func onBombed(bomb: FBBomb) {
