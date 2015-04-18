@@ -31,6 +31,7 @@
 		668257601AE1FD3400195E07 /* AVAudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682575D1AE1FD3400195E07 /* AVAudioHelper.swift */; };
 		668257611AE1FD3400195E07 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682575E1AE1FD3400195E07 /* UIViewExtensions.swift */; };
 		668257621AE1FD3400195E07 /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6682575F1AE1FD3400195E07 /* Misc.swift */; };
+		66F6EA5C1AE213E1001DE8F0 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F6EA5B1AE213E1001DE8F0 /* Bomb.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		6682575D1AE1FD3400195E07 /* AVAudioHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVAudioHelper.swift; sourceTree = "<group>"; };
 		6682575E1AE1FD3400195E07 /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		6682575F1AE1FD3400195E07 /* Misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		66F6EA5B1AE213E1001DE8F0 /* Bomb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 		65340B7F1AE150100080C402 /* BombsAway */ = {
 			isa = PBXGroup;
 			children = (
+				66F6EA5B1AE213E1001DE8F0 /* Bomb.swift */,
 				651A5B9F1AE1595A009624AB /* BombsAway-Bridging-Header.h */,
 				668257501AE1FCEE00195E07 /* AdamViewController.swift */,
 				65340B821AE150100080C402 /* AppDelegate.swift */,
@@ -301,6 +304,7 @@
 				668257611AE1FD3400195E07 /* UIViewExtensions.swift in Sources */,
 				668257511AE1FCEE00195E07 /* AdamViewController.swift in Sources */,
 				651A5BA61AE15CA8009624AB /* FirebaseDTOs.swift in Sources */,
+				66F6EA5C1AE213E1001DE8F0 /* Bomb.swift in Sources */,
 				65340B851AE150100080C402 /* ViewController.swift in Sources */,
 				65340B831AE150100080C402 /* AppDelegate.swift in Sources */,
 				668257601AE1FD3400195E07 /* AVAudioHelper.swift in Sources */,
