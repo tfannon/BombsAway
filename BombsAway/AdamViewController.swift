@@ -30,10 +30,6 @@ class AdamViewController: UIViewController, IBombListener {
     
     func newIncomingBomb()
     {
-        var timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self, selector: Selector("newIncomingBombImpl"), userInfo: nil, repeats: false)
-    }
-    func newIncomingBombImpl()
-    {
         if (bomb == nil)
         {
             bomb = Bomb(listener: self, uiView: self.view, imgBomb: imgBomb, imgExplosion: imgExplosion)
