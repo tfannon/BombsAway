@@ -85,21 +85,7 @@ class Bomb
                 
                 if (hit)
                 {
-                    UIView.animateWithDuration(0.3,
-                        animations: { () -> Void in
-                            // do actual move
-                            self.pingPlayer.play()
-                            self.imgBomb.center = self.bombStartingPosition
-                        },
-                        completion: { (complete) -> Void in
-                            if (complete)
-                            {
-                                //when animation completes
-                                self.pingPlayer.stop()
-                                self.listener?.onDiffusedAndSent(self)
-                                self.calculating = false
-                            }
-                    })
+                    diffuseImpl()
                 }
                 else
                 {
@@ -111,6 +97,31 @@ class Bomb
                 calculating = false
             }
         }
+    }
+    
+    func diffuse()
+    {
+        calculating = true;
+        diffuseImpl()
+    }
+    
+    private func diffuseImpl()
+    {
+        UIView.animateWithDuration(0.3,
+            animations: { () -> Void in
+                // do actual move
+                self.pingPlayer.play()
+                self.imgBomb.center = self.bombStartingPosition
+            },
+            completion: { (complete) -> Void in
+                if (complete)
+                {
+                    //when animation completes
+                    self.pingPlayer.stop()
+                    self.listener?.onDiffusedAndSent(self)
+                    self.calculating = false
+                }
+        })
     }
     
     private func explode()
