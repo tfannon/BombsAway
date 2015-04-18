@@ -132,12 +132,11 @@ class GameMaster {
     }
     
     func plantBomb(player : FBPlayer) {
-        let bomb = FBBomb(ttl: 10, senderId: self.me.id, senderName: self.me.name, receiverId: player.id, receiverName: player.name)
         let ref = root.childByAppendingPath("bombs")
         let child = ref.childByAutoId()
         ref.onDisconnectRemoveValue()
-        var dict = ["ttl":10, "senderId":self.me.id, "senderName": self.me.name, "receiverId": player.id, "receiverName": player.name]
-        child.setValue(bomb)
+        var dict = ["ttl":"10", "senderId":self.me.id, "senderName": self.me.name, "receiverId": player.id, "receiverName": player.name]
+        child.setValue(dict)
         bombs[child.key] = FBBomb(dict: dict)
     }
 }

@@ -48,19 +48,19 @@ class ViewController: UIViewController, IGameClient {
     
     //MARK:  IGameClient
     func onBombAppeared(bomb : FBBomb) {
-        events.text = events.text + "\(bomb) appeared"
+        events.text = events.text + "\(bomb) appeared\r\n"
     }
     
     func onBombDisappeared(bomb : FBBomb) {
-        events.text = events.text + "\(bomb) disappeared"
+        events.text = events.text + "\(bomb) disappeared\r\n"
     }
     
     func onPlayerAppeared(player : FBPlayer) {
-        events.text = events.text + "\(player) joined"
+        events.text = events.text + "\(player) joined\r\n"
     }
 
     func onPlayerDisappeared(player : FBPlayer) {
-        events.text = events.text + "\(player) left"
+        events.text = events.text + "\(player) left\r\n"
     }
 }
 
