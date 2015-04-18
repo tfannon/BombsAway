@@ -83,6 +83,10 @@ class ViewController: UIViewController, IGameClient {
         events.text = events.text + "\(player) left\r\n"
     }
     
+    func onPlayerChanged(player : FBPlayer) {
+        events.text = events.text + "\(player) changed\r\n"
+    }
+    
     func onBombed(bomb : FBBomb) {
         events.text = events.text + "you have the bomb\r\n"
         detonate.enabled = true
