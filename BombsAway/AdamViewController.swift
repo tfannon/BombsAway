@@ -123,6 +123,9 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     func onPlayerDisappeared(player: FBPlayer) {
         
     }
+    func onPlayerChanged(player : FBPlayer) {
+    }
+
     func onLastPlayerDisappeared() {
         bomb?.diffuse()
     }

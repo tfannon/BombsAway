@@ -17,6 +17,7 @@ protocol IGameClient {
     func onBombDisappeared(bomb : FBBomb)
     func onPlayerAppeared(player : FBPlayer)
     func onPlayerDisappeared(player : FBPlayer)
+    func onPlayerChanged(player : FBPlayer)
     func onLastPlayerDisappeared()
 }
 
@@ -47,6 +48,9 @@ class GameMaster {
         playersRef.observeEventType(.ChildRemoved, withBlock: { snapshot in
             self.fbOnPlayerRemoved(snapshot)
         })
+        playersRef.observeEventType(.ChildChanged, withBlock: { snapshot in
+            self.fbOnPlayerChanged(snapshot)
+        })
 
         bombsRef.observeEventType(.ChildAdded, withBlock: { snapshot in
             self.fbOnBombAdded(snapshot)
@@ -74,6 +78,14 @@ class GameMaster {
             {
                 x.1.onLastPlayerDisappeared()
             }
+        }
+    }
+    
+    func fbOnPlayerChanged(snapshot : FDataSnapshot) {
+        var p = FBPlayer(snapshot: snapshot)
+        players[p.id] = p
+        for x in clients.values.array {
+            x.onPlayerChanged(p)
         }
     }
     
@@ -130,7 +142,7 @@ class GameMaster {
             //add this player to firebase
             let child = self.playersRef.childByAutoId()
             child.onDisconnectRemoveValue()
-            var dict = ["id":child.key, "name":name]
+            var dict = ["id":child.key, "name":name, "score":0]
             child.setValue(dict)
             
             let p = FBPlayer(dict: dict)
@@ -143,10 +155,16 @@ class GameMaster {
     }
     
     func detonate(clientKey : String) {
+        let pRef = playersRef.childByAppendingPath(me.id)
+        me.score--
+        pRef.updateChildValues(["score":me.score])
         choosePlayerAndBomb()
     }
     
     func defuse(clientKey : String) {
+        let pRef = playersRef.childByAppendingPath(me.id)
+        me.score++
+        pRef.updateChildValues(["score":me.score])
         choosePlayerAndBomb()
     }
     
