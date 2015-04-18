@@ -19,10 +19,12 @@ class AdamViewController: UIViewController, IBombListener {
     var bomb : Bomb?
     
     func onDiffusedAndSent(bomb: Bomb) {
+        self.bomb = nil
         newIncomingBomb()
     }
     
     func onExploded(bomb: Bomb) {
+        self.bomb = nil
         newIncomingBomb()
     }
     
@@ -32,8 +34,11 @@ class AdamViewController: UIViewController, IBombListener {
     }
     func newIncomingBombImpl()
     {
-        bomb = Bomb(listener: self, uiView: self.view, imgBomb: imgBomb, imgExplosion: imgExplosion)
-        bomb!.incoming()
+        if (bomb == nil)
+        {
+            bomb = Bomb(listener: self, uiView: self.view, imgBomb: imgBomb, imgExplosion: imgExplosion)
+            bomb!.incoming()
+        }
     }
     
     override func shouldAutorotate() -> Bool {
