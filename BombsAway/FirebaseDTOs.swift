@@ -10,19 +10,22 @@
 class FBPlayer : Printable {
     var id : String
     var name : String
+    var score : Int
     
     init(snapshot : FDataSnapshot) {
         self.id = snapshot.value["id"] as! String
         self.name = snapshot.value["name"] as! String
+        self.score = snapshot.value["score"] as! Int
     }
     
     init(dict: NSDictionary) {
         self.id = dict.objectForKey("id") as! String
         self.name = dict.objectForKey("name") as! String
+        self.score = dict.objectForKey("score") as! Int
     }
     
     var description : String {
-        return "\(self.id):\(self.name)"
+        return "\(self.id):\(self.name):\(self.score)"
     }
 }
 
