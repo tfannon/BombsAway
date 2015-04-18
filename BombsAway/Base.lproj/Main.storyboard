@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bGg-fc-Cog">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
@@ -66,8 +66,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sag-iZ-Rlb">
-                                <rect key="frame" x="277" y="550" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                                <rect key="frame" x="176" y="550" width="248" height="30"/>
+                                <state key="normal" title="Start Playing">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -75,18 +75,30 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explosion.png" translatesAutoresizingMaskIntoConstraints="NO" id="BVk-wL-gFw">
-                                <rect key="frame" x="175" y="20" width="176" height="179"/>
+                                <rect key="frame" x="0.0" y="107" width="176" height="179"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bomb.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xzu-TA-BQO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="bomb.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xzu-TA-BQO">
                                 <rect key="frame" x="27" y="20" width="96" height="99"/>
                                 <gestureRecognizers/>
                             </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r5L-56-5Wb">
+                                <rect key="frame" x="176" y="20" width="248" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="248" id="KnI-P3-wPF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="r5L-56-5Wb" firstAttribute="trailing" secondItem="sag-iZ-Rlb" secondAttribute="trailing" id="Kpx-VE-8Sz"/>
+                            <constraint firstItem="r5L-56-5Wb" firstAttribute="top" secondItem="Xzu-TA-BQO" secondAttribute="top" id="Q7r-Rx-zAx"/>
                             <constraint firstItem="sag-iZ-Rlb" firstAttribute="centerX" secondItem="2hg-uN-vFi" secondAttribute="centerX" id="S97-05-CLo"/>
                             <constraint firstAttribute="bottom" secondItem="sag-iZ-Rlb" secondAttribute="bottom" constant="20" symbolic="YES" id="lhq-Hz-bu1"/>
+                            <constraint firstItem="r5L-56-5Wb" firstAttribute="leading" secondItem="sag-iZ-Rlb" secondAttribute="leading" id="rXo-Ra-A9t"/>
+                            <constraint firstItem="r5L-56-5Wb" firstAttribute="top" secondItem="NHn-ug-omC" secondAttribute="bottom" id="wfI-lz-VOP"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="k6N-xf-OkA" appends="YES" id="teX-6O-0UZ"/>
@@ -96,6 +108,7 @@
                         <outlet property="button" destination="sag-iZ-Rlb" id="eqd-Qb-NsU"/>
                         <outlet property="imgBomb" destination="Xzu-TA-BQO" id="h9c-Cd-NiL"/>
                         <outlet property="imgExplosion" destination="BVk-wL-gFw" id="mB9-X1-7AM"/>
+                        <outlet property="txtName" destination="r5L-56-5Wb" id="pje-gg-roW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ngM-P7-tgy" userLabel="First Responder" sceneMemberID="firstResponder"/>
