@@ -69,7 +69,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
             let ttl = Double(Misc.GetRandom(5, endingInclusive: 10)) / 10.0
             bomb = Bomb(
                 listener: self,
-                ttl: 3,
+                ttl: 1,
                 uiView: self.view,
                 imgBomb: imgBomb,
                 imgExplosion: imgExplosion)
