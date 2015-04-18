@@ -149,7 +149,7 @@ class GameMaster {
         //this will remove entire bombs node.. change to remove singular
         bombsRef.removeValue()
         let otherPlayers = players.values.array.filter { $0.id != self.me?.id }
-        let idx = Misc.GetRandom(0, endingInclusive: otherPlayers.count)
+        let idx = Misc.GetRandom(0, endingInclusive: otherPlayers.count-1)
         plantBomb(otherPlayers[idx])
     }
     
