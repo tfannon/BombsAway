@@ -25,12 +25,14 @@ class ViewController: UIViewController, IGameClient {
         gameMaster.registerClient("Test", client: self)
     }
     
+    //MARK: - UIViewController overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         events.text = ""
     }
 
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        //var x = UIGestureRecognizer()
         let aTouch = event.allTouches()!.first as! UITouch
         let touchLocation = aTouch.locationInView(aTouch.view)
         self.myImage.center = touchLocation
@@ -46,7 +48,11 @@ class ViewController: UIViewController, IGameClient {
     
     //MARK:  IGameClient
     func onBombAppeared(bomb : FBBomb) {
-        
+        events.text = events.text + "\(bomb) appeared"
+    }
+    
+    func onBombDisappeared(bomb : FBBomb) {
+        events.text = events.text + "\(bomb) disappeared"
     }
     
     func onPlayerAppeared(player : FBPlayer) {
@@ -55,11 +61,6 @@ class ViewController: UIViewController, IGameClient {
 
     func onPlayerDisappeared(player : FBPlayer) {
         events.text = events.text + "\(player) left"
-    }
-
-    //actions
-    func setBombState(state : BombState) {
-        
     }
 }
 

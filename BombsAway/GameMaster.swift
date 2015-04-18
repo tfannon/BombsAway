@@ -13,31 +13,41 @@ enum BombState {
 protocol IGameClient {
     //events
     func onBombAppeared(bomb : FBBomb)
+    func onBombDisappeared(bomb : FBBomb)
     func onPlayerAppeared(player : FBPlayer)
     func onPlayerDisappeared(player : FBPlayer)
-    //actions
-    //func addPlayer(name : String)
-    func setBombState(state : BombState)
 }
 
 class GameMaster {
     //Singleton
     static let sharedInstance = GameMaster()
     
-    //wired up by app delegate
-    var me : FBPlayer?
-    var players = [String:FBPlayer]()
+    private var me : FBPlayer!
+    private var players = [String:FBPlayer]()
+    private var bombs = [String:FBBomb]()
     
-    var clients = [String:IGameClient]()
-    var root = Firebase(url: "https://shining-torch-5343.firebaseio.com/BombsAway/")
+    private var clients = [String:IGameClient]()
+    private var root = Firebase(url: "https://shining-torch-5343.firebaseio.com/BombsAway/")
+    private var playerRef : Firebase
+    private var bombRef : Firebase
+
     
     init() {
-        let ref = root.childByAppendingPath("players")
-        ref.observeEventType(.ChildAdded, withBlock: { snapshot in
+        playerRef = root.childByAppendingPath("players")
+        bombRef = root.childByAppendingPath("bombs")
+        
+        playerRef.observeEventType(.ChildAdded, withBlock: { snapshot in
             self.fbOnPlayerAdded(snapshot)
         })
-        ref.observeEventType(.ChildRemoved, withBlock: { snapshot in
+        playerRef.observeEventType(.ChildRemoved, withBlock: { snapshot in
             self.fbOnPlayerRemoved(snapshot)
+        })
+
+        bombRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+            self.fbOnBombAdded(snapshot)
+        })
+        bombRef.observeEventType(.ChildRemoved, withBlock: { snapshot in
+            self.fbOnBombRemoved(snapshot)
         })
     }
     
@@ -48,6 +58,7 @@ class GameMaster {
         for x in clients {
             x.1.onPlayerAppeared(p)
         }
+        
     }
     
     func fbOnPlayerRemoved(snapshot : FDataSnapshot) {
@@ -55,6 +66,23 @@ class GameMaster {
         players.removeValueForKey(p.id)
         for x in clients {
             x.1.onPlayerDisappeared(p)
+        }
+    }
+    
+    func fbOnBombAdded(snapshot : FDataSnapshot) {
+        var p = FBBomb(snapshot: snapshot)
+        bombs[snapshot.key] = p
+        for x in clients {
+            x.1.onBombAppeared(p)
+        }
+    }
+    
+    func fbOnBombRemoved(snapshot : FDataSnapshot) {
+        var p = FBBomb(snapshot: snapshot)
+        bombs.removeValueForKey(snapshot.key)
+        for x in clients {
+            x.1.onBombDisappeared(p)
+            
         }
     }
     
@@ -69,24 +97,43 @@ class GameMaster {
         clients.removeValueForKey(key)
     }
     
-   
-    static func getPlayers(completion: (players : [FBPlayer]) -> Void) {
-        var ref = sharedInstance.root.childByAppendingPath("players")
+    //MARK:  calls from View Controller
+    func addPlayer(name : String) {
+        getPlayers() { (result) in
+            let child = self.playerRef.childByAutoId()
+            child.onDisconnectRemoveValue()
+            self.me = FBPlayer(dict: ["id":child.key, "name":name])
+            child.setValue(self.me)
+            if result.count == 1 {
+                self.plantBomb(result[0])
+            }
+        }
+    }
+    
+    
+    //MARK:  internal helper methods
+    private func getPlayers(completion: (players : [FBPlayer]) -> Void) {
+        var ref = root.childByAppendingPath("players")
         ref.observeSingleEventOfType(.Value, withBlock: { snapshot in
-            println(snapshot)
             println("Firebase players query returned")
-            //note we use as! here because it is guaranteed to have something if the event got fired
-            completion(players: [])
+            println(snapshot)
+            var players = [FBPlayer]()
+            if let tmp = snapshot.value as? [String:NSDictionary] {
+                for (k,v) in tmp {
+                    players.append(FBPlayer(dict: v))
+                }
+            }
+            completion(players: players)
         })
     }
     
-    //MARK:  calls from View Controller
-    func addPlayer(name : String) {
-        let ref = root.childByAppendingPath("players")
-        let child = ref.childByAutoId()
-        child.onDisconnectRemoveValue()
-        var values = ["id":child.key, "name":name]
-        child.setValue(values)
-    }
     
+    
+    func plantBomb(player : FBPlayer) {
+        let bomb = FBBomb(ttl: 10, senderId: self.me.id, senderName: self.me.name, receiverId: player.id, receiverName: player.name)
+        let ref = root.childByAppendingPath("bombs")
+        let child = ref.childByAutoId()
+        ref.onDisconnectRemoveValue()
+        child.setValue(bomb)
+    }
 }
