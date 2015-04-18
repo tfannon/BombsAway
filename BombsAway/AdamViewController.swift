@@ -21,7 +21,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     let gameMaster = GameMaster.sharedInstance
     var gameMasterClientKey : String!
     
-    let SINGLE_PLAYER_MODE = true
+    let SINGLE_PLAYER_MODE = false
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
