@@ -11,28 +11,48 @@ import UIKit
 class ViewController: UIViewController, IGameClient {
 
     var gameMaster = GameMaster.sharedInstance
+    var clientKey : String!
 
     @IBOutlet weak var name: UITextField!
     @IBOutlet weak var myImage: UIImageView!
     @IBOutlet weak var events: UITextView!
     
+    @IBOutlet weak var detonate: UIButton!
+    @IBOutlet weak var defuse: UIButton!
+    
     @IBAction func addPlayer(sender: AnyObject) {
-        gameMaster.addPlayer(self.nameOfClass, name: name.text)
+        gameMaster.addPlayer(clientKey, name: name.text)
+        UserSettings.sharedInstance.setUserName(name.text)
     }
 
+    @IBAction func defusePressed(sender: AnyObject) {
+        detonate.enabled = false
+        defuse.enabled = false
+        gameMaster.defuse(clientKey)
+    }
+    
+    @IBAction func detonatePressed(sender: AnyObject) {
+        detonate.enabled = false
+        defuse.enabled = false
+        gameMaster.detonate(clientKey)
+    }
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        gameMaster.registerClient(self.nameOfClass, client: self)
+        clientKey = self.nameOfClass
+        gameMaster.registerClient(clientKey, client: self)
     }
     
     //MARK: - UIViewController overrides
     override func viewDidLoad() {
         super.viewDidLoad()
+        name.text = UserSettings.sharedInstance.getUserName()
         events.text = ""
+        detonate.enabled = false
+        defuse.enabled = false
     }
 
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        //var x = UIGestureRecognizer()
         let aTouch = event.allTouches()!.first as! UITouch
         let touchLocation = aTouch.locationInView(aTouch.view)
         self.myImage.center = touchLocation
@@ -65,6 +85,8 @@ class ViewController: UIViewController, IGameClient {
     
     func onBombed(bomb : FBBomb) {
         events.text = events.text + "you have the bomb\r\n"
+        detonate.enabled = true
+        defuse.enabled = true
     }
 }
 

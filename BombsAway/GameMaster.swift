@@ -124,6 +124,13 @@ class GameMaster {
         }
     }
     
+    func detonate(clientKey : String) {
+        
+    }
+    
+    func defuse(clientKey : String) {
+        
+    }
     
     //MARK:  internal helper methods
     private func getPlayers(completion: (players : [FBPlayer]) -> Void) {
@@ -141,7 +148,7 @@ class GameMaster {
         })
     }
     
-    func plantBomb(player : FBPlayer) {
+    private func plantBomb(player : FBPlayer) {
         let child = bombRef.childByAutoId()
         bombRef.onDisconnectRemoveValue()
         var dict = ["ttl":"10", "senderId":self.me!.id, "senderName": self.me!.name, "receiverId": player.id, "receiverName": player.name]

@@ -27,7 +27,7 @@ class FBPlayer : Printable {
 }
 
 
-class FBBomb {
+class FBBomb : Printable {
     var ttl : String
     var senderId : String
     var senderName : String
@@ -56,6 +56,10 @@ class FBBomb {
         self.senderName = dict.objectForKey("senderName") as! String
         self.receiverId = dict.objectForKey("receiverId") as! String
         self.receiverName = dict.objectForKey("receiverName") as! String
+    }
+    
+    var description : String {
+        return "\(senderId):\(senderName) gives bomb to \(receiverId):\(receiverName)"
     }
     
 }
