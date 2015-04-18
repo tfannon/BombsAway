@@ -20,6 +20,7 @@
 		65340B8A1AE150100080C402 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65340B891AE150100080C402 /* Images.xcassets */; };
 		65340B8D1AE150100080C402 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65340B8B1AE150100080C402 /* LaunchScreen.xib */; };
 		65340B991AE150100080C402 /* BombsAwayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65340B981AE150100080C402 /* BombsAwayTests.swift */; };
+		656037B51AE2153100643D40 /* NSObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656037B41AE2153100643D40 /* NSObjectExtensions.swift */; };
 		6575A9F31AE170AF0055FEA5 /* gear-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = 6575A9F21AE170AF0055FEA5 /* gear-512x512.png */; };
 		6575A9F51AE188320055FEA5 /* GameMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575A9F41AE188320055FEA5 /* GameMaster.swift */; };
 		668257511AE1FCEE00195E07 /* AdamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668257501AE1FCEE00195E07 /* AdamViewController.swift */; };
@@ -63,6 +64,7 @@
 		65340B921AE150100080C402 /* BombsAwayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BombsAwayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65340B971AE150100080C402 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65340B981AE150100080C402 /* BombsAwayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BombsAwayTests.swift; sourceTree = "<group>"; };
+		656037B41AE2153100643D40 /* NSObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectExtensions.swift; sourceTree = "<group>"; };
 		6575A9F21AE170AF0055FEA5 /* gear-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gear-512x512.png"; path = "BombsAway/gear-512x512.png"; sourceTree = "<group>"; };
 		6575A9F41AE188320055FEA5 /* GameMaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMaster.swift; sourceTree = "<group>"; };
 		668257501AE1FCEE00195E07 /* AdamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdamViewController.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				65340B8B1AE150100080C402 /* LaunchScreen.xib */,
 				65340B861AE150100080C402 /* Main.storyboard */,
 				65340B801AE150100080C402 /* Supporting Files */,
+				656037B41AE2153100643D40 /* NSObjectExtensions.swift */,
 			);
 			path = BombsAway;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6575A9F51AE188320055FEA5 /* GameMaster.swift in Sources */,
+				656037B51AE2153100643D40 /* NSObjectExtensions.swift in Sources */,
 				668257621AE1FD3400195E07 /* Misc.swift in Sources */,
 				668257611AE1FD3400195E07 /* UIViewExtensions.swift in Sources */,
 				668257511AE1FCEE00195E07 /* AdamViewController.swift in Sources */,

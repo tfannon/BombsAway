@@ -17,12 +17,12 @@ class ViewController: UIViewController, IGameClient {
     @IBOutlet weak var events: UITextView!
     
     @IBAction func addPlayer(sender: AnyObject) {
-        gameMaster.addPlayer(name.text)
+        gameMaster.addPlayer(self.nameOfClass, name: name.text)
     }
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        gameMaster.registerClient("Test", client: self)
+        gameMaster.registerClient(self.nameOfClass, client: self)
     }
     
     //MARK: - UIViewController overrides
@@ -61,6 +61,10 @@ class ViewController: UIViewController, IGameClient {
 
     func onPlayerDisappeared(player : FBPlayer) {
         events.text = events.text + "\(player) left\r\n"
+    }
+    
+    func onBombed(bomb : FBBomb) {
+        events.text = events.text + "you have the bomb\r\n"
     }
 }
 
