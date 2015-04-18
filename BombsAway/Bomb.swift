@@ -20,7 +20,7 @@ class Bomb
     let uiView : UIView!
     let imgBomb : UIImageView!
     let imgExplosion : UIImageView!
-    let listener : IBombListener!
+    var listener : IBombListener?
     let ttl : NSTimeInterval
  
     let fusePlayer = AudioPlayer(filename: "fuse")
@@ -59,6 +59,7 @@ class Bomb
                 self.imgBomb.center = self.uiView.center
             },
             completion: { (complete) -> Void in
+                self.calculating = true;
                 if (complete)
                 {
                     //when animation completes
@@ -95,7 +96,7 @@ class Bomb
                             {
                                 //when animation completes
                                 self.pingPlayer.stop()
-                                self.listener.onDiffusedAndSent(self)
+                                self.listener?.onDiffusedAndSent(self)
                                 self.calculating = false
                             }
                     })
@@ -122,7 +123,7 @@ class Bomb
         self.boomPlayer.play()
         self.imgExplosion.fadeIn(duration: 0.2, completion: { (completed) -> Void in
             self.imgExplosion.fadeOut(duration: 0.5, completion: { (completed) -> Void in
-                self.listener.onExploded(self)
+                self.listener?.onExploded(self)
             })
         })
     }
@@ -141,4 +142,8 @@ class Bomb
         self.imgExplosion = imgExplosion
     }
     
+    deinit
+    {
+        self.listener = nil
+    }
 }
