@@ -94,10 +94,7 @@
                                     <action selector="buttonUp:" destination="bGg-fc-Cog" eventType="touchUpInside" id="U0I-SG-Ffr"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explosion.png" translatesAutoresizingMaskIntoConstraints="NO" id="BVk-wL-gFw">
-                                <rect key="frame" x="0.0" y="107" width="176" height="179"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="bomb.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xzu-TA-BQO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bomb.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xzu-TA-BQO">
                                 <rect key="frame" x="27" y="20" width="96" height="99"/>
                                 <gestureRecognizers/>
                             </imageView>
@@ -109,12 +106,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explosion.png" translatesAutoresizingMaskIntoConstraints="NO" id="BVk-wL-gFw">
+                                <rect key="frame" x="0.0" y="107" width="176" height="179"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="r5L-56-5Wb" firstAttribute="trailing" secondItem="sag-iZ-Rlb" secondAttribute="trailing" id="Kpx-VE-8Sz"/>
-                            <constraint firstItem="r5L-56-5Wb" firstAttribute="top" secondItem="Xzu-TA-BQO" secondAttribute="top" id="Q7r-Rx-zAx"/>
                             <constraint firstItem="sag-iZ-Rlb" firstAttribute="centerX" secondItem="2hg-uN-vFi" secondAttribute="centerX" id="S97-05-CLo"/>
                             <constraint firstAttribute="bottom" secondItem="sag-iZ-Rlb" secondAttribute="bottom" constant="20" symbolic="YES" id="lhq-Hz-bu1"/>
                             <constraint firstItem="r5L-56-5Wb" firstAttribute="leading" secondItem="sag-iZ-Rlb" secondAttribute="leading" id="rXo-Ra-A9t"/>
