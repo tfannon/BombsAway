@@ -88,5 +88,9 @@ class ViewController: UIViewController, IGameClient {
         detonate.enabled = true
         defuse.enabled = true
     }
+    
+    func onLastPlayerDisappeared() {
+        
+    }
 }
 

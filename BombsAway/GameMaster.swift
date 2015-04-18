@@ -17,6 +17,7 @@ protocol IGameClient {
     func onBombDisappeared(bomb : FBBomb)
     func onPlayerAppeared(player : FBPlayer)
     func onPlayerDisappeared(player : FBPlayer)
+    func onLastPlayerDisappeared()
 }
 
 class GameMaster {
@@ -69,6 +70,10 @@ class GameMaster {
         players.removeValueForKey(p.id)
         for x in clients {
             x.1.onPlayerDisappeared(p)
+            if (players.count == 0)
+            {
+                x.1.onLastPlayerDisappeared()
+            }
         }
     }
     
@@ -149,8 +154,11 @@ class GameMaster {
         //this will remove entire bombs node.. change to remove singular
         bombsRef.removeValue()
         let otherPlayers = players.values.array.filter { $0.id != self.me?.id }
-        let idx = Misc.GetRandom(0, endingInclusive: otherPlayers.count-1)
-        plantBomb(otherPlayers[idx])
+        if (otherPlayers.count > 0)
+        {
+            let idx = Misc.GetRandom(0, endingInclusive: otherPlayers.count-1)
+            plantBomb(otherPlayers[idx])
+        }
     }
     
     //MARK:  internal helper methods

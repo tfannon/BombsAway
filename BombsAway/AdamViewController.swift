@@ -115,6 +115,9 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     func onPlayerDisappeared(player: FBPlayer) {
         
     }
+    func onLastPlayerDisappeared() {
+        bomb?.diffuse()
+    }
     
     // MARK: Standard iOS Stuff
     override func shouldAutorotate() -> Bool {
