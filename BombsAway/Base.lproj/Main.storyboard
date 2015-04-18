@@ -40,10 +40,30 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hZ-3f-JbS">
+                                <rect key="frame" x="221" y="45" width="65" height="30"/>
+                                <state key="normal" title="Detonate">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="detonatePressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Y8p-xf-6Se"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDz-8B-oTj">
+                                <rect key="frame" x="221" y="72" width="52" height="30"/>
+                                <state key="normal" title="Defuse">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="defusePressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="uJK-BY-0Da"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="defuse" destination="pDz-8B-oTj" id="hS2-6Z-Llq"/>
+                        <outlet property="detonate" destination="3hZ-3f-JbS" id="hco-RQ-EZ3"/>
                         <outlet property="events" destination="u6V-gX-487" id="7VF-fh-nRV"/>
                         <outlet property="myImage" destination="4oh-q0-mpd" id="E2R-xn-HJ7"/>
                         <outlet property="name" destination="BYV-bS-B4w" id="t9G-YH-fox"/>
