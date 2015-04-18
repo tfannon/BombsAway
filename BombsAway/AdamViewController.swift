@@ -62,6 +62,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     
     // MARK: GameMaster
     @IBAction func buttonUp(sender: AnyObject) {
+        UserSettings.sharedInstance.setUserName(txtName.text)
         gameMaster.addPlayer(self.nameOfClass, name: txtName.text)
         button.hidden = true
         txtName.hidden = true
@@ -97,6 +98,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
         txtName.delegate = self; // ADD THIS LINE
         imgBomb.hidden = true
         imgExplosion.hidden = true
+        txtName.text = UserSettings.sharedInstance.getUserName()
     }
 
     override func didReceiveMemoryWarning() {
