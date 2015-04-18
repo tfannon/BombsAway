@@ -50,4 +50,13 @@ class FBBomb {
         self.receiverId = snapshot.value["receiverId"] as! String
         self.receiverName = snapshot.value["receiverName"] as! String
     }
+    
+    init(dict: NSDictionary) {
+        self.ttl = (dict.objectForKey("ttl") as! String).toInt()!
+        self.senderId = dict.objectForKey("senderId") as! String
+        self.senderName = dict.objectForKey("senderName") as! String
+        self.receiverId = dict.objectForKey("receiverId") as! String
+        self.receiverName = dict.objectForKey("receiverName") as! String
+    }
+    
 }
