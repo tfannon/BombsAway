@@ -24,32 +24,33 @@ class GameMaster {
     static let sharedInstance = GameMaster()
     
     private var players = [String:FBPlayer]()
-    private var bombs = [String:FBBomb]()
-    private var me : FBPlayer?
+    private var bomb : FBBomb!
+    private var bombKey : String!
+    private var me : FBPlayer!
     
     private var clientToPlayer = [String:String]()
     
     private var clients = [String:IGameClient]()
     private var root = Firebase(url: "https://shining-torch-5343.firebaseio.com/BombsAway/")
-    private var playerRef : Firebase
-    private var bombRef : Firebase
+    private var playersRef : Firebase
+    private var bombsRef : Firebase
 
     
     init() {
-        playerRef = root.childByAppendingPath("players")
-        bombRef = root.childByAppendingPath("bombs")
+        playersRef = root.childByAppendingPath("players")
+        bombsRef = root.childByAppendingPath("bombs")
         
-        playerRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+        playersRef.observeEventType(.ChildAdded, withBlock: { snapshot in
             self.fbOnPlayerAdded(snapshot)
         })
-        playerRef.observeEventType(.ChildRemoved, withBlock: { snapshot in
+        playersRef.observeEventType(.ChildRemoved, withBlock: { snapshot in
             self.fbOnPlayerRemoved(snapshot)
         })
 
-        bombRef.observeEventType(.ChildAdded, withBlock: { snapshot in
+        bombsRef.observeEventType(.ChildAdded, withBlock: { snapshot in
             self.fbOnBombAdded(snapshot)
         })
-        bombRef.observeEventType(.ChildRemoved, withBlock: { snapshot in
+        bombsRef.observeEventType(.ChildRemoved, withBlock: { snapshot in
             self.fbOnBombRemoved(snapshot)
         })
     }
@@ -72,30 +73,42 @@ class GameMaster {
     }
     
     func fbOnBombAdded(snapshot : FDataSnapshot) {
-        var b = FBBomb(snapshot: snapshot)
-        bombs[snapshot.key] = b
+        self.bomb = FBBomb(snapshot: snapshot)
+        self.bombKey = snapshot.key
+        
         for (k,v) in clients {
             //what player is this client managing
             let playerId = clientToPlayer[k]
             //if this player is the receiver of the bomb
-            if b.receiverId == playerId {
-                v.onBombed(b)
+            if bomb.receiverId == playerId {
+                v.onBombed(bomb)
             }
             else {
-                v.onBombAppeared(b)
+                v.onBombAppeared(bomb)
             }
-       }
-    }
-    
-    func fbOnBombRemoved(snapshot : FDataSnapshot) {
-        var p = FBBomb(snapshot: snapshot)
-        bombs.removeValueForKey(snapshot.key)
-        for x in clients {
-            x.1.onBombDisappeared(p)
-            
         }
     }
     
+    func fbOnBombRemoved(snapshot : FDataSnapshot) {
+    }
+    
+//    func fbOnBombAdded(snapshot : FDataSnapshot) {
+//        var b = FBBomb(snapshot: snapshot)
+//        bombs[snapshot.key] = b
+//        for (k,v) in clients {
+//            //what player is this client managing
+//            let playerId = clientToPlayer[k]
+//            //if this player is the receiver of the bomb
+//            if b.receiverId == playerId {
+//                v.onBombed(b)
+//            }
+//            else {
+//                v.onBombAppeared(b)
+//            }
+//       }
+//    }
+    
+
     //MARK: - registration
     func registerClient(key : String, client : IGameClient) {
         clients[key] = client
@@ -110,7 +123,7 @@ class GameMaster {
         //first get the running list of players
         getPlayers() { (result) in
             //add this player to firebase
-            let child = self.playerRef.childByAutoId()
+            let child = self.playersRef.childByAutoId()
             child.onDisconnectRemoveValue()
             var dict = ["id":child.key, "name":name]
             child.setValue(dict)
@@ -125,11 +138,19 @@ class GameMaster {
     }
     
     func detonate(clientKey : String) {
-        
+        choosePlayerAndBomb()
     }
     
     func defuse(clientKey : String) {
-        
+        choosePlayerAndBomb()
+    }
+    
+    private func choosePlayerAndBomb() {
+        //this will remove entire bombs node.. change to remove singular
+        bombsRef.removeValue()
+        let otherPlayers = players.values.array.filter { $0.id != self.me?.id }
+        let idx = Misc.GetRandom(0, endingInclusive: otherPlayers.count)
+        plantBomb(otherPlayers[idx])
     }
     
     //MARK:  internal helper methods
@@ -149,10 +170,8 @@ class GameMaster {
     }
     
     private func plantBomb(player : FBPlayer) {
-        let child = bombRef.childByAutoId()
-        bombRef.onDisconnectRemoveValue()
+        let bomb = bombsRef.childByAutoId()
         var dict = ["ttl":"10", "senderId":self.me!.id, "senderName": self.me!.name, "receiverId": player.id, "receiverName": player.name]
-        child.setValue(dict)
-        bombs[child.key] = FBBomb(dict: dict)
-    }
+        bomb.setValue(dict)
+   }
 }
