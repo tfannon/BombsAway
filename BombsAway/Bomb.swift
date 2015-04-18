@@ -25,7 +25,9 @@ class Bomb
     let fusePlayer = AudioPlayer(filename: "fuse")
     let boomPlayer = AudioPlayer(filename: "boom")
     let pingPlayer = AudioPlayer(filename: "ping")
+    
     var bombStartingPosition : CGPoint!
+    var calculating = false;
     
     func incoming()
     {
@@ -65,37 +67,48 @@ class Bomb
                     self.fusePlayer.stop()
                     self.boomPlayer.play()
                     self.imgExplosion.fadeIn(duration: 0.2, completion: { (completed) -> Void in
-                    self.imgExplosion.fadeOut(duration: 0.5)
-                    self.listener.onExploded(self)
-                })
+                        self.imgExplosion.fadeOut(duration: 0.5, completion: { (completed) -> Void in
+                            self.listener.onExploded(self)
+                        })
+                    })
+                }
             }
-        })
+        )
     }
     
     func tryDiffuseAndSend(point : CGPoint!)
     {
-        let hit = imgBomb.layer.presentationLayer().hitTest(point) != nil
-        if (hit)
+        if (!calculating)
         {
-            let layer = imgBomb.layer.presentationLayer() as! CALayer
-            let frame = layer.frame
-            imgBomb.layer.removeAllAnimations()
-            imgBomb.frame = frame
-            
-            UIView.animateWithDuration(0.3,
-                animations: { () -> Void in
-                    // do actual move
-                    self.pingPlayer.play()
-                    self.imgBomb.center = self.bombStartingPosition
-                },
-                completion: { (complete) -> Void in
-                    if (complete)
-                    {
-                        //when animation completes
-                        self.pingPlayer.stop()
-                        self.listener.onDiffusedAndSent(self)
-                    }
-            })
+            calculating = true;
+            let hit = imgBomb.layer.presentationLayer().hitTest(point) != nil
+            if (hit)
+            {
+                let layer = imgBomb.layer.presentationLayer() as! CALayer
+                let frame = layer.frame
+                imgBomb.layer.removeAllAnimations()
+                imgBomb.frame = frame
+                
+                UIView.animateWithDuration(0.3,
+                    animations: { () -> Void in
+                        // do actual move
+                        self.pingPlayer.play()
+                        self.imgBomb.center = self.bombStartingPosition
+                    },
+                    completion: { (complete) -> Void in
+                        if (complete)
+                        {
+                            //when animation completes
+                            self.pingPlayer.stop()
+                            self.listener.onDiffusedAndSent(self)
+                            self.calculating = false
+                        }
+                })
+            }
+            else
+            {
+                calculating = false
+            }
         }
     }
     
