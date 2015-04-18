@@ -95,29 +95,35 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bomb.png" translatesAutoresizingMaskIntoConstraints="NO" id="Xzu-TA-BQO">
-                                <rect key="frame" x="27" y="20" width="56" height="58"/>
+                                <rect key="frame" x="232" y="292" width="56" height="58"/>
                                 <gestureRecognizers/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r5L-56-5Wb">
-                                <rect key="frame" x="176" y="20" width="248" height="30"/>
+                                <rect key="frame" x="176" y="54" width="248" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="248" id="KnI-P3-wPF"/>
+                                    <constraint firstAttribute="width" constant="248" id="6vM-A2-6pG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explosion.png" translatesAutoresizingMaskIntoConstraints="NO" id="BVk-wL-gFw">
-                                <rect key="frame" x="0.0" y="107" width="176" height="179"/>
+                                <rect key="frame" x="305" y="248" width="176" height="179"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8k-j2-3Ky">
+                                <rect key="frame" x="11" y="0.0" width="573" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="r5L-56-5Wb" firstAttribute="trailing" secondItem="sag-iZ-Rlb" secondAttribute="trailing" id="Kpx-VE-8Sz"/>
+                            <constraint firstItem="r5L-56-5Wb" firstAttribute="leading" secondItem="sag-iZ-Rlb" secondAttribute="leading" id="K8I-Ja-nbM"/>
+                            <constraint firstItem="r5L-56-5Wb" firstAttribute="top" secondItem="NHn-ug-omC" secondAttribute="bottom" constant="34" id="Mvr-nW-ShT"/>
                             <constraint firstItem="sag-iZ-Rlb" firstAttribute="centerX" secondItem="2hg-uN-vFi" secondAttribute="centerX" id="S97-05-CLo"/>
                             <constraint firstAttribute="bottom" secondItem="sag-iZ-Rlb" secondAttribute="bottom" constant="20" symbolic="YES" id="lhq-Hz-bu1"/>
-                            <constraint firstItem="r5L-56-5Wb" firstAttribute="leading" secondItem="sag-iZ-Rlb" secondAttribute="leading" id="rXo-Ra-A9t"/>
-                            <constraint firstItem="r5L-56-5Wb" firstAttribute="top" secondItem="NHn-ug-omC" secondAttribute="bottom" id="wfI-lz-VOP"/>
+                            <constraint firstItem="r5L-56-5Wb" firstAttribute="trailing" secondItem="sag-iZ-Rlb" secondAttribute="trailing" id="rf2-P4-8eT"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="k6N-xf-OkA" appends="YES" id="teX-6O-0UZ"/>
@@ -127,6 +133,7 @@
                         <outlet property="button" destination="sag-iZ-Rlb" id="eqd-Qb-NsU"/>
                         <outlet property="imgBomb" destination="Xzu-TA-BQO" id="h9c-Cd-NiL"/>
                         <outlet property="imgExplosion" destination="BVk-wL-gFw" id="mB9-X1-7AM"/>
+                        <outlet property="lblScore" destination="d8k-j2-3Ky" id="jdM-Bk-N2r"/>
                         <outlet property="txtName" destination="r5L-56-5Wb" id="pje-gg-roW"/>
                     </connections>
                 </viewController>
@@ -137,7 +144,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="806" y="460"/>
+            <point key="canvasLocation" x="807" y="433"/>
         </scene>
     </scenes>
     <resources>

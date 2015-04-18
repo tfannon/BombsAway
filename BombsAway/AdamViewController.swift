@@ -15,13 +15,15 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     @IBOutlet weak var imgBomb: UIImageView!
     @IBOutlet weak var imgExplosion: UIImageView!
     @IBOutlet weak var txtName: UITextField!
+    @IBOutlet weak var lblScore: UILabel!
     
     var i = 0
     var bomb : Bomb?
     let gameMaster = GameMaster.sharedInstance
     var gameMasterClientKey : String!
+    var players = [String: FBPlayer]()
     
-    let SINGLE_PLAYER_MODE = false
+    let SINGLE_PLAYER_MODE = true
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -110,7 +112,13 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
         
     }
     func onPlayerAppeared(player: FBPlayer) {
-        
+        players[player.id] = player
+        var s = ""
+        for x in players
+        {
+            s += "\(x.1.name): \(x.1) "
+        }
+        lblScore.text = s;
     }
     func onPlayerDisappeared(player: FBPlayer) {
         
@@ -140,5 +148,10 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    override func prefersStatusBarHidden() -> Bool {
+        return true;
+    }
+
 }
 
