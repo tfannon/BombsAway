@@ -13,4 +13,14 @@ extension UIView {
             self.alpha = 0.0
             }, completion: completion)
     }
+    func removeAllAnimations(placeInCurrentPosition : Bool = true)
+    {
+        let layer = self.layer.presentationLayer() as! CALayer
+        let frame = layer.frame
+        self.layer.removeAllAnimations()
+        if (placeInCurrentPosition)
+        {
+            self.frame = frame
+        }
+    }
 }
