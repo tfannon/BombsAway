@@ -28,7 +28,7 @@ class Bomb
     let pingPlayer = AudioPlayer(filename: "ping")
     
     var bombStartingPosition : CGPoint!
-    var calculating = false;
+    var locked = false;
     var missedAttempts = 0;
     
     func incoming()
@@ -59,7 +59,7 @@ class Bomb
                 self.imgBomb.center = self.uiView.center
             },
             completion: { (complete) -> Void in
-                self.calculating = true;
+                self.locked = true;
                 if (complete)
                 {
                     //when animation completes
@@ -71,17 +71,14 @@ class Bomb
     
     func tryDiffuseAndSend(point : CGPoint!)
     {
-        if (!calculating)
+        if (!locked)
         {
-            calculating = true;
+            locked = true;
             let hit = imgBomb.layer.presentationLayer().hitTest(point) != nil
             missedAttempts++;
             if (hit || missedAttempts >= 2)
             {
-                let layer = imgBomb.layer.presentationLayer() as! CALayer
-                let frame = layer.frame
-                imgBomb.layer.removeAllAnimations()
-                imgBomb.frame = frame
+                placeBombAtCurrentPosition()
                 
                 if (hit)
                 {
@@ -94,14 +91,14 @@ class Bomb
             }
             else
             {
-                calculating = false
+                locked = false
             }
         }
     }
     
     func diffuse()
     {
-        calculating = true;
+        locked = true;
         diffuseImpl()
     }
     
@@ -117,9 +114,10 @@ class Bomb
                 if (complete)
                 {
                     //when animation completes
+                    self.placeBombAtCurrentPosition()
                     self.pingPlayer.stop()
                     self.listener?.onDiffusedAndSent(self)
-                    self.calculating = false
+                    self.locked = false
                 }
         })
     }
@@ -137,6 +135,14 @@ class Bomb
                 self.listener?.onExploded(self)
             })
         })
+    }
+    
+    private func placeBombAtCurrentPosition()
+    {
+        let layer = imgBomb.layer.presentationLayer() as! CALayer
+        let frame = layer.frame
+        imgBomb.layer.removeAllAnimations()
+        imgBomb.frame = frame
     }
     
     init(
