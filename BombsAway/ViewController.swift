@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, IGameClient, UIPickerViewDataSource,UIPickerViewDelegate {
+class ViewController: UIViewController, IGameClient, UIPickerViewDataSource,UIPickerViewDelegate, UITextFieldDelegate {
 
     var gameMaster = GameMaster.sharedInstance
     var clientKey : String!
@@ -31,35 +31,6 @@ class ViewController: UIViewController, IGameClient, UIPickerViewDataSource,UIPi
         gameMaster.registerClient(clientKey, client: self, isSinglePlayer: true)
     }
 
-    
-    @IBAction func addPlayer(sender: AnyObject) {
-        var count = players.values.array.filter { $0.name == self.name.text }.count
-        //if player exists, add a number to his name  but only persist the original in user settings
-        if count++ > 0 {
-            name.text = "\(name.text)\(count)"
-        }
-        else {
-            UserSettings.sharedInstance.setUserName(name.text)
-        }
-        gameMaster.addPlayer(clientKey, name: name.text)
-    }
-
-    @IBAction func removePlayer(sender: AnyObject) {
-    }
-    
-    @IBAction func defusePressed(sender: AnyObject) {
-        detonate.enabled = false
-        defuse.enabled = false
-        gameMaster.defuse(clientKey)
-    }
-    
-    @IBAction func detonatePressed(sender: AnyObject) {
-        detonate.enabled = false
-        defuse.enabled = false
-        gameMaster.detonate(clientKey)
-    }
-    
-    
     //MARK: - UIViewController overrides
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +41,15 @@ class ViewController: UIViewController, IGameClient, UIPickerViewDataSource,UIPi
         playerNameScore.text = ""
         playerPicker.dataSource = self
         playerPicker.delegate = self
+        name.delegate = self
     }
+    
+    //MARK: text field
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
     
     //MARK: - PickerView
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -104,6 +83,40 @@ class ViewController: UIViewController, IGameClient, UIPickerViewDataSource,UIPi
             self.myImage.center = touchLocation
         }
     }
+    
+    //MARK - IBAction
+    @IBAction func addPlayer(sender: AnyObject) {
+        var count = players.values.array.filter { $0.name.rangeOfString(self.name.text) != nil }.count
+        //if player exists, add a number to his name  but only persist the original in user settings
+        var newName = name.text
+        switch (count) {
+        case 0 : UserSettings.sharedInstance.setUserName(name.text)
+        case 1 : newName = "\(name.text)\(count+1)"
+        default : newName = "\(name.text.sub(name.text.length))\(count+1)"
+        }
+            
+//            let index = advance(name.text.startIndex, name.text.length)
+//            let tmp = name.text.substringToIndex(index)
+//            newName = "\(tmp)\(count+1)"
+//        }
+        gameMaster.addPlayer(clientKey, name: newName)
+    }
+    
+    @IBAction func removePlayer(sender: AnyObject) {
+    }
+    
+    @IBAction func defusePressed(sender: AnyObject) {
+        detonate.enabled = false
+        defuse.enabled = false
+        gameMaster.defuse(clientKey)
+    }
+    
+    @IBAction func detonatePressed(sender: AnyObject) {
+        detonate.enabled = false
+        defuse.enabled = false
+        gameMaster.detonate(clientKey)
+    }
+
     
     //MARK:  IGameClient
     func onBombAppeared(bomb : FBBomb) {
