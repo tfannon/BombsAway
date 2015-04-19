@@ -5,10 +5,7 @@
 //  Created by Tommy Fannon on 4/17/15.
 //  Copyright (c) 2015 Crazy8Dev. All rights reserved.
 //
-enum BombState {
-    case Detonted
-    case Defused
-}
+
 
 protocol IGameClient {
     //events
@@ -26,19 +23,28 @@ class GameMaster {
     static let sharedInstance = GameMaster()
     
     private var players = [String:FBPlayer]()
+    private var clientToPlayer = [String:String]()
+    private var clients = [String:IGameClient]()
+    
+    //these will all be initialized before they are removed
     private var bomb : FBBomb!
     private var bombKey : String!
     private var me : FBPlayer!
     
-    private var clientToPlayer = [String:String]()
-    
-    private var clients = [String:IGameClient]()
     private var root = Firebase(url: "https://shining-torch-5343.firebaseio.com/BombsAway/")
-    private var playersRef : Firebase
-    private var bombsRef : Firebase
+    private var playersRef : Firebase!
+    private var bombsRef : Firebase!
 
-    
     init() {
+        
+    }
+    
+    
+    //this is called when first client connects because client may request a special node for testing
+    private func initializeFirebase(key : String? = nil) {
+        if key != nil {
+            root = root.childByAppendingPath(key)
+        }
         playersRef = root.childByAppendingPath("players")
         bombsRef = root.childByAppendingPath("bombs")
         
@@ -51,7 +57,7 @@ class GameMaster {
         playersRef.observeEventType(.ChildChanged, withBlock: { snapshot in
             self.fbOnPlayerChanged(snapshot)
         })
-
+        
         bombsRef.observeEventType(.ChildAdded, withBlock: { snapshot in
             self.fbOnBombAdded(snapshot)
         })
@@ -59,6 +65,8 @@ class GameMaster {
             self.fbOnBombRemoved(snapshot)
         })
     }
+    
+
     
     //MARK: -- event callbacks from firebase
     func fbOnPlayerAdded(snapshot : FDataSnapshot) {
@@ -109,27 +117,17 @@ class GameMaster {
     func fbOnBombRemoved(snapshot : FDataSnapshot) {
     }
     
-//    func fbOnBombAdded(snapshot : FDataSnapshot) {
-//        var b = FBBomb(snapshot: snapshot)
-//        bombs[snapshot.key] = b
-//        for (k,v) in clients {
-//            //what player is this client managing
-//            let playerId = clientToPlayer[k]
-//            //if this player is the receiver of the bomb
-//            if b.receiverId == playerId {
-//                v.onBombed(b)
-//            }
-//            else {
-//                v.onBombAppeared(b)
-//            }
-//       }
-//    }
-    
-
     //MARK: - registration
-    func registerClient(key : String, client : IGameClient) {
+    func registerClient(key : String, client : IGameClient, isSinglePlayer : Bool = false) {
         clients[key] = client
+        //if i am the first client, setup the first references
+        var tmp : String? = isSinglePlayer ? key : nil
+        if clients.count == 1 {
+            initializeFirebase(key: tmp)
+        }
     }
+    
+    
     
     func removeClient(key : String) {
         clients.removeValueForKey(key)
