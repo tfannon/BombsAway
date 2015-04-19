@@ -114,7 +114,7 @@ class Bomb
                 if (complete)
                 {
                     //when animation completes
-                    self.placeBombAtCurrentPosition()
+                    self.imgBomb.hidden = true
                     self.pingPlayer.stop()
                     self.listener?.onDiffusedAndSent(self)
                     self.locked = false
