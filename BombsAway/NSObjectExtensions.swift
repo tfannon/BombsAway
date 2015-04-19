@@ -16,11 +16,3 @@ public extension NSObject{
     }
 }
 
-public extension String {
-    var length: Int { return count(self) }  // Swift 1.2
-    
-    func sub(length : Int) -> String {
-        let index = advance(self.startIndex, length)
-        return self.substringToIndex(index)
-    }
-}
