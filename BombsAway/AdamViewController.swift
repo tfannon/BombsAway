@@ -16,6 +16,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     @IBOutlet weak var imgExplosion: UIImageView!
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var lblScore: UILabel!
+    var lblMessage : UILabel!
     
     var i = 0
     var bomb : Bomb?
@@ -27,8 +28,11 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        gameMasterClientKey = self.nameOfClass
-        gameMaster.registerClient(gameMasterClientKey, client: self)
+        if (!SINGLE_PLAYER_MODE)
+        {
+            gameMasterClientKey = self.nameOfClass
+            gameMaster.registerClient(gameMasterClientKey, client: self)
+        }
     }
     
     // MARK: text field
@@ -76,6 +80,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
                 imgBomb: imgBomb,
                 imgExplosion: imgExplosion)
             bomb!.incoming()
+            //showMessage("Here it comes!")
         }
     }
     
@@ -85,6 +90,22 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
             let p = sender.locationInView(self.view)
             bomb!.tryDiffuseAndSend(p)
         }
+    }
+    
+    // MARK: Messages
+    private func showMessage(message : String!)
+    {
+        lblMessage.removeAllAnimations(placeInCurrentPosition: false)
+        lblMessage.alpha = 1
+        lblMessage.text = message
+        lblMessage.hidden = false
+        lblMessage.fadeOut(duration: 1.5, delay: 0, completion: { (complete) -> Void in
+            if (complete)
+            {
+                self.lblMessage.hidden = true;
+            }
+        }
+        )
     }
     
     // MARK: GameMaster
@@ -106,7 +127,7 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
         newIncomingBomb()
     }
     func onBombAppeared(bomb: FBBomb) {
-        
+        showMessage("\(bomb.senderName) bombed \(bomb.receiverName)")
     }
     func onBombDisappeared(bomb: FBBomb) {
         
@@ -114,10 +135,12 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
     func onPlayerAppeared(player: FBPlayer) {
         players[player.id] = player
         updateScore()
+        showMessage("\(player.name) has joined")
     }
     func onPlayerDisappeared(player: FBPlayer) {
         players.removeValueForKey(player.id)
         updateScore()
+        showMessage("\(player.name) has left")
     }
     func onPlayerChanged(player : FBPlayer) {
         players[player.id] = player
@@ -153,6 +176,13 @@ class AdamViewController: UIViewController, IBombListener, IGameClient, UITextFi
         imgBomb.hidden = true
         imgExplosion.hidden = true
         txtName.text = UserSettings.sharedInstance.getUserName()
+        
+        lblMessage = UILabel(frame: CGRectMake(0, 0, self.view.frame.width - 20, 30))
+        lblMessage.center = CGPointMake(self.view.frame.width / 2, self.view.frame.height - 40)
+        lblMessage.textAlignment = .Center
+        lblMessage.textColor = UIColor.purpleColor()
+        lblMessage.hidden = true
+        self.view.addSubview(lblMessage)
     }
 
     override func didReceiveMemoryWarning() {

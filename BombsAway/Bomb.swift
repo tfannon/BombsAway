@@ -78,7 +78,7 @@ class Bomb
             missedAttempts++;
             if (hit || missedAttempts >= 2)
             {
-                placeBombAtCurrentPosition()
+                imgBomb.removeAllAnimations(placeInCurrentPosition: true)
                 
                 if (hit)
                 {
@@ -135,14 +135,6 @@ class Bomb
                 self.listener?.onExploded(self)
             })
         })
-    }
-    
-    private func placeBombAtCurrentPosition()
-    {
-        let layer = imgBomb.layer.presentationLayer() as! CALayer
-        let frame = layer.frame
-        imgBomb.layer.removeAllAnimations()
-        imgBomb.frame = frame
     }
     
     init(
